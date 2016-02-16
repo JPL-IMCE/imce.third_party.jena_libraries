@@ -25,7 +25,13 @@ def IMCEThirdPartyProject(projectName: String, location: String): Project =
       IMCEKeys.licenseYearOrRange := "2015-2016",
       IMCEKeys.organizationInfo := IMCEPlugin.Organizations.thirdParty,
       git.baseVersion := Versions.version,
-      scalaVersion := Versions.scala_version
+      scalaVersion := Versions.scala_version,
+      projectID := {
+        val previous = projectID.value
+        previous.extra(
+          "build.date.utc" -> buildUTCDate.value,
+          "artifact.kind" -> "third_party.aggregate.libraries")
+      }
     )
     .settings(
 
@@ -66,11 +72,6 @@ def IMCEThirdPartyProject(projectName: String, location: String): Project =
           def getFileIfExists(f: File, where: String)
           : Option[(File, String)] =
             if (f.exists()) Some((f, s"$where/${f.getName}")) else None
-
-          val ivyHome: File =
-            Classpaths
-              .bootIvyHome(appC)
-              .getOrElse(sys.error("Launcher did not provide the Ivy home directory."))
 
           val libDir = location + "/lib/"
           val srcDir = location + "/lib.sources/"
@@ -115,7 +116,7 @@ def IMCEThirdPartyProject(projectName: String, location: String): Project =
                     m.id.version == mReport.module.revision
                 }.to[Set]
                 val scope: Seq[Module] = transitiveScope(roots, graph).to[Seq].sortBy( m => m.id.organisation + m.id.name)
-                val files = scope.flatMap { m: Module => m.jarFile }.to[Seq].sorted
+                val files = scope.flatMap { m: Module => m.jarFile }.sorted
                 s.log.info(s"Excluding ${files.size} jars from zip aggregate resource dependencies")
                 files.foreach { f =>
                   s.log.info(s" exclude: ${f.getParentFile.getParentFile.name}/${f.getParentFile.name}/${f.name}")
@@ -167,7 +168,9 @@ def IMCEThirdPartyProject(projectName: String, location: String): Project =
 lazy val jenaLibs = IMCEThirdPartyProject("jena-libraries", "jenaLibs")
   .settings(
     libraryDependencies ++= Seq(
-      "gov.nasa.jpl.imce.thirdParty" %% "scala-libraries" % Versions_scala_libraries.version % "compile" artifacts
+      "gov.nasa.jpl.imce.thirdParty" %% "scala-libraries" % Versions_scala_libraries.version
+        extra("artifact.kind" -> "third_party.aggregate.libraries")
+        artifacts
         Artifact("scala-libraries", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
       "org.apache.jena" % "jena-tdb" % Versions.jenaTDB %
