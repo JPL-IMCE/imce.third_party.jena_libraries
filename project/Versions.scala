@@ -2,15 +2,15 @@
 object Versions {
 
   // this project's version
-  val version = "2.3.4"
-  val scala_version = "2.11.7"
+  val version = "2.5.0"
+  val scala_version = "2.11.8"
 
   // jenaLibs
 
   // http://mvnrepository.com/artifact/org.apache.jena/jena-tdb
-  val jenaTDB = "3.0.1"
+  val jenaTDB = "3.1.0"
 
   // http://mvnrepository.com/artifact/org.apache.jena/jena-fuseki-server
-  val jenaFuseki = "2.3.1"
+  val jenaFuseki = "2.4.0"
 
 }
