@@ -4,16 +4,7 @@ import net.virtualvoid.sbt.graph._
 
 import gov.nasa.jpl.imce.sbt._
 
-useGpg := true
-
 updateOptions := updateOptions.value.withCachedResolution(true)
-
-developers := List(
-  Developer(
-    id="rouquett",
-    name="Nicolas F. Rouquette",
-    email="nicolas.f.rouquette@jpl.nasa.gov",
-    url=url("https://gateway.jpl.nasa.gov/personal/rouquett/default.aspx")))
 
 val resourceArtifact = settingKey[Artifact]("Specifies the project's resource artifact")
 
@@ -174,11 +165,13 @@ def IMCEThirdPartyProject(projectName: String, location: String): Project =
 
 lazy val jenaLibs = IMCEThirdPartyProject("jena-libraries", "jenaLibs")
   .settings(
+    resolvers += Resolver.bintrayRepo("jpl-imce", "gov.nasa.jpl.imce"),
+
     libraryDependencies ++= Seq(
-      // extra("artifact.kind" -> "third_party.aggregate.libraries")
-      "gov.nasa.jpl.imce.thirdParty" %% "other-scala-libraries" % Versions_other_scala_libraries.version
+      "gov.nasa.jpl.imce" %% "imce.third_party.other_scala_libraries" % Versions_other_scala_libraries.version
+        % "compile"
         artifacts
-        Artifact("other-scala-libraries", "zip", "zip", Some("resource"), Seq(), None, Map()),
+        Artifact("imce.third_party.other_scala_libraries", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
       "org.apache.jena" % "jena-tdb" % Versions.jenaTDB %
       "compile" withSources() withJavadoc(),
