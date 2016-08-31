@@ -1,7 +1,7 @@
 # IMCE Third-Party Jena Libraries
 
-[![Build Status](https://travis-ci.org/JPL-IMCE/imce.third_party.jena_scala_libraries.svg?branch=master)](https://travis-ci.org/JPL-IMCE/imce.third_party.jena_scala_libraries)
-[ ![Download](https://api.bintray.com/packages/jpl-imce/gov.nasa.jpl.imce/imce.third_party.jena_scala_libraries/images/download.svg) ](https://bintray.com/jpl-imce/gov.nasa.jpl.imce/imce.third_party.jena_scala_libraries/_latestVersion)
+[![Build Status](https://travis-ci.org/JPL-IMCE/imce.third_party.jena_libraries.svg?branch=master)](https://travis-ci.org/JPL-IMCE/imce.third_party.jena_libraries)
+[ ![Download](https://api.bintray.com/packages/jpl-imce/gov.nasa.jpl.imce/imce.third_party.jena_libraries/images/download.svg) ](https://bintray.com/jpl-imce/gov.nasa.jpl.imce/imce.third_party.jena_libraries/_latestVersion)
  
 This project builds an aggregate of several Apache Jena libraries published by the following organization:
 
