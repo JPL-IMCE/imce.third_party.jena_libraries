@@ -194,7 +194,10 @@ def IMCEThirdPartyProject(projectName: String, location: String): Project =
             case n => sys.error("Error extracting " + tgz + ". Exit code: " + n)
           }
 
-          (dir / "bin").*** pair relativeTo(dir)
+          val s1 = (dir / "bin").*** pair relativeTo(dir)
+          val s2 = (dir ** "fuseki-server") pair relativeTo(dir)
+          val s3 = (dir ** "fuseki-server.jar") pair relativeTo(dir)
+          s1 ++ s2 ++ s3
         }
 
       },
